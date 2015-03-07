@@ -11,6 +11,7 @@ DB = Sequel.sqlite
 DB.create_table :items do
   primary_key :id
   String :name
+  TrueClass :discounted
   Float :price
 end
 

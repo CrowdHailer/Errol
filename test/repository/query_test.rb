@@ -1,15 +1,31 @@
 require_relative '../test_config'
 
 class Item < Sequel::Model(:items)
+end
 
+class Inquiry
+  def initialize(requirements={})
+    @requirements = requirements
+  end
+
+  def show_offers?
+    @requirements[:show_offers]
+  end
 end
 
 class TestRepository < Errol::Repository
   def dataset
     # TODO this returns items
-    Item.dataset
+    dataset = Item.dataset
     # This returns hashes
     # items = DB['items']
+
+    inquiry.show_offers? ? dataset.where(:discounted) : dataset
+
+  end
+
+  def inquiry
+    Inquiry.new(requirements)
   end
 
   def dispatch(record)
@@ -27,6 +43,16 @@ class RepositoryQueyTest < RecordTest
     assert_equal true, TestRepository.empty?
   end
 
+  def test_repository_not_empty_with_item
+    items.insert(:name => 'abc')
+    assert_equal false, TestRepository.empty?
+  end
+
+  def test_filtered_repository_is_empty
+    items.insert(:name => 'abc', :discounted => false)
+    assert_equal true, TestRepository.empty?(:show_offers => true)
+  end
+
   def test_repository_starts_with_count_zero
     assert_equal 0, TestRepository.count
   end
@@ -36,9 +62,9 @@ class RepositoryQueyTest < RecordTest
     assert_equal 1, TestRepository.count
   end
 
-  def test_repository_not_empty_with_item
-    items.insert(:name => 'abc')
-    assert_equal false, TestRepository.empty?
+  def test_filtered_repository_counts_zero_items
+    items.insert(:name => 'abc', :discounted => false)
+    assert_equal 0, TestRepository.count(:show_offers => true)
   end
 
   def test_can_get_first_item

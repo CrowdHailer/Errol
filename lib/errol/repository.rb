@@ -3,12 +3,12 @@ module Errol
     RecordAbsent = Class.new(StandardError)
 
     class << self
-      def empty?
-        count == 0
+      def empty?(requirements={})
+        count(requirements) == 0
       end
 
-      def count
-        new.dataset.count
+      def count(requirements={})
+        new(requirements).count
       end
 
       def first
@@ -30,6 +30,14 @@ module Errol
       def all
         new.all
       end
+    end
+
+    def initialize(requirements={})
+      @requirements = requirements
+    end
+
+    def count
+      dataset.count
     end
 
     def first
@@ -63,6 +71,10 @@ module Errol
 
     def record_absent(id)
       raise RecordAbsent, "#{self.class.name} contains no record with id: #{id}"
+    end
+
+    def requirements
+      @requirements
     end
   end
 end
