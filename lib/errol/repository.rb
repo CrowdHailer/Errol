@@ -8,6 +8,10 @@ module Errol
       def count
         new.dataset.count
       end
+
+      def first
+        new.dataset.first
+      end
     end
   end
 end

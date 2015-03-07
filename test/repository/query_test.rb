@@ -1,12 +1,18 @@
 require_relative '../test_config'
 
-# items = DB['items']
+class Item < Sequel::Model(:items)
+
+end
 
 class TestRepository < Errol::Repository
   def dataset
-    DB[:items]
+    # TODO this returns items
+    Item.dataset
+    # This returns hashes
+    # items = DB['items']
   end
 end
+
 
 class RepositoryQueyTest < RecordTest
   def items
@@ -30,4 +36,10 @@ class RepositoryQueyTest < RecordTest
     items.insert(:name => 'abc')
     assert_equal false, TestRepository.empty?
   end
+
+  def test_can_get_first_item
+    item = Item.create(:name => 'abc')
+    assert_equal item, TestRepository.first
+  end
+
 end
