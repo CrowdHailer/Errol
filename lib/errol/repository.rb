@@ -10,8 +10,12 @@ module Errol
       end
 
       def first
-        new.dataset.first
+        new.first
       end
+    end
+
+    def first
+      dispatch(dataset.first)
     end
   end
 end

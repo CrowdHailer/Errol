@@ -11,6 +11,10 @@ class TestRepository < Errol::Repository
     # This returns hashes
     # items = DB['items']
   end
+
+  def dispatch(record)
+    SimpleDelegator.new record
+  end
 end
 
 
@@ -39,7 +43,12 @@ class RepositoryQueyTest < RecordTest
 
   def test_can_get_first_item
     item = Item.create(:name => 'abc')
-    assert_equal item, TestRepository.first
+    assert_equal item, TestRepository.first.__getobj__
+  end
+
+  def test_wraps_first_item
+    items.insert(:name => 'abc')
+    assert_equal SimpleDelegator, TestRepository.first.class
   end
 
 end
