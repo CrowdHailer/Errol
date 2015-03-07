@@ -27,19 +27,24 @@ module Errol
     end
 
     def first
-      dispatch(dataset.first)
+      _dispatch(dataset.first)
     end
 
     def last
-      dispatch(dataset.last)
+      _dispatch(dataset.last)
     end
 
     def [](id)
-      dispatch(dataset.first(:id => id))
+      _dispatch(dataset.first(:id => id))
     end
 
     def fetch(id)
-      dispatch(dataset.first(:id => id))
+      _dispatch(dataset.first(:id => id))
+    end
+
+    private
+    def _dispatch(item)
+      dispatch(item) if item
     end
   end
 end

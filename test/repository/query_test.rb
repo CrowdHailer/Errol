@@ -51,6 +51,10 @@ class RepositoryQueyTest < RecordTest
     assert_equal SimpleDelegator, TestRepository.first.class
   end
 
+  def test_returns_nil_for_no_first_item
+    assert_nil TestRepository.first
+  end
+
   def test_can_get_last_item
     item = Item.create(:name => 'abc')
     assert_equal item, TestRepository.last.__getobj__
@@ -59,6 +63,10 @@ class RepositoryQueyTest < RecordTest
   def test_wraps_last_item
     items.insert(:name => 'abc')
     assert_equal SimpleDelegator, TestRepository.last.class
+  end
+
+  def test_returns_nil_for_no_last_item
+    assert_nil TestRepository.last
   end
 
   def test_can_find_item_by_id
@@ -71,6 +79,10 @@ class RepositoryQueyTest < RecordTest
     assert_equal SimpleDelegator, TestRepository[item.id].class
   end
 
+  def test_returns_nil_for_no_found_item
+    assert_nil TestRepository[2]
+  end
+
   def test_can_fetch_item_by_id
     item = Item.create(:name => 'abc')
     assert_equal item, TestRepository.fetch(item.id).__getobj__
@@ -79,6 +91,10 @@ class RepositoryQueyTest < RecordTest
   def test_wraps_fetched_item
     item = Item.create(:name => 'abc')
     assert_equal SimpleDelegator, TestRepository.fetch(item.id).class
+  end
+
+  def test_returns_nil_for_no_fetched_item
+    assert_nil TestRepository.fetch(2)
   end
 
 end
