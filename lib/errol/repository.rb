@@ -11,24 +11,24 @@ module Errol
         new(requirements).count
       end
 
-      def first
-        new.first
+      def first(requirements={})
+        new(requirements).first
       end
 
-      def last
-        new.last
+      def last(requirements={})
+        new(requirements).last
       end
 
-      def [](id)
-        new[id]
+      def [](id, requirements={})
+        new(requirements)[id]
       end
 
-      def fetch(id, &block)
-        new.fetch(id, &block)
+      def fetch(id, requirements={}, &block)
+        new(requirements).fetch(id, &block)
       end
 
-      def all
-        new.all
+      def all(requirements={})
+        new(requirements).all
       end
     end
 

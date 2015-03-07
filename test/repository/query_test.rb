@@ -81,6 +81,13 @@ class RepositoryQueyTest < RecordTest
     assert_nil TestRepository.first
   end
 
+  def test_returns_first_filtered_item
+    items.insert(:name => 'abc', :discounted => false)
+    i = items.insert(:name => 'abc', :discounted => true)
+    items.insert(:name => 'abc', :discounted => false)
+    assert_equal i, TestRepository.first(:show_offers => true).id
+  end
+
   def test_can_get_last_item
     item = Item.create(:name => 'abc')
     assert_equal item, TestRepository.last.__getobj__
@@ -95,6 +102,13 @@ class RepositoryQueyTest < RecordTest
     assert_nil TestRepository.last
   end
 
+  def test_returns_last_filtered_item
+    items.insert(:name => 'abc', :discounted => false)
+    i = items.insert(:name => 'abc', :discounted => true)
+    items.insert(:name => 'abc', :discounted => false)
+    assert_equal i, TestRepository.last(:show_offers => true).id
+  end
+
   def test_can_find_item_by_id
     item = Item.create(:name => 'abc')
     assert_equal item, TestRepository[item.id].__getobj__
@@ -107,6 +121,11 @@ class RepositoryQueyTest < RecordTest
 
   def test_returns_nil_for_no_found_item
     assert_nil TestRepository[2]
+  end
+
+  def test_returns_nil_on_filtered_find
+    item = Item.create(:name => 'abc')
+    assert_nil TestRepository[item.id, :show_offers => true]
   end
 
   def test_can_fetch_item_by_id
@@ -126,6 +145,13 @@ class RepositoryQueyTest < RecordTest
     assert_equal 'TestRepository contains no record with id: 2', err.message
   end
 
+  def test_raises_error_on_filtered_fetch
+    item = Item.create(:name => 'abc')
+    assert_raises Errol::Repository::RecordAbsent do
+      TestRepository.fetch(item.id, :show_offers => true)
+    end
+  end
+
   def test_fetch_calls_block_for_missing_item
     mock = MiniTest::Mock.new
     mock.expect :record, true, [2]
@@ -140,6 +166,12 @@ class RepositoryQueyTest < RecordTest
   def test_wraps_all_items
     item = Item.create(:name => 'abc')
     assert_equal [SimpleDelegator], TestRepository.all.map(&:class)
+  end
+
+  def test_filters_all_records
+    discounted = Item.create(:name => 'abc', :discounted => true)
+    Item.create(:name => 'abc')
+    assert_equal [discounted], TestRepository.all(:show_offers => true).map(&:__getobj__)
   end
 
 end
