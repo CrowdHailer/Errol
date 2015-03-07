@@ -100,4 +100,10 @@ class RepositoryQueyTest < RecordTest
     assert_equal 'TestRepository contains no record with id: 2', err.message
   end
 
+  def test_fetch_calls_block_for_missing_item
+    mock = MiniTest::Mock.new
+    mock.expect :record, true, [2]
+    TestRepository.fetch(2) { |id| mock.record id }
+  end
+
 end

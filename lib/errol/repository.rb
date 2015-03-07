@@ -23,8 +23,8 @@ module Errol
         new[id]
       end
 
-      def fetch(id)
-        new.fetch(id)
+      def fetch(id, &block)
+        new.fetch(id, &block)
       end
     end
 
@@ -41,7 +41,10 @@ module Errol
     end
 
     def fetch(id)
-      _dispatch(dataset.first(:id => id)) || record_absent(id)
+      item = _dispatch(dataset.first(:id => id))
+      return item if item
+      return yield id if block_given?
+      record_absent(id)
     end
 
     private
