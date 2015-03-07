@@ -51,4 +51,24 @@ class RepositoryQueyTest < RecordTest
     assert_equal SimpleDelegator, TestRepository.first.class
   end
 
+  def test_can_get_last_item
+    item = Item.create(:name => 'abc')
+    assert_equal item, TestRepository.last.__getobj__
+  end
+
+  def test_wraps_last_item
+    items.insert(:name => 'abc')
+    assert_equal SimpleDelegator, TestRepository.last.class
+  end
+
+  def test_can_find_item_by_id
+    item = Item.create(:name => 'abc')
+    assert_equal item, TestRepository[item.id].__getobj__
+  end
+
+  def test_wraps_found_item
+    item = Item.create(:name => 'abc')
+    assert_equal SimpleDelegator, TestRepository[item.id].class
+  end
+
 end

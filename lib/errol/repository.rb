@@ -12,10 +12,26 @@ module Errol
       def first
         new.first
       end
+
+      def last
+        new.last
+      end
+
+      def [](id)
+        new[id]
+      end
     end
 
     def first
       dispatch(dataset.first)
+    end
+
+    def last
+      dispatch(dataset.last)
+    end
+
+    def [](id)
+      dispatch(dataset.first(:id => id))
     end
   end
 end
