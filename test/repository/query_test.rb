@@ -93,8 +93,11 @@ class RepositoryQueyTest < RecordTest
     assert_equal SimpleDelegator, TestRepository.fetch(item.id).class
   end
 
-  def test_returns_nil_for_no_fetched_item
-    assert_nil TestRepository.fetch(2)
+  def test_raises_error_for_no_fetched_item
+    err = assert_raises Errol::Repository::RecordAbsent do
+      TestRepository.fetch(2)
+    end
+    assert_equal 'TestRepository contains no record with id: 2', err.message
   end
 
 end

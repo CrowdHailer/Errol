@@ -1,5 +1,7 @@
 module Errol
   class Repository
+    RecordAbsent = Class.new(StandardError)
+
     class << self
       def empty?
         count == 0
@@ -39,12 +41,17 @@ module Errol
     end
 
     def fetch(id)
-      _dispatch(dataset.first(:id => id))
+      _dispatch(dataset.first(:id => id)) || record_absent(id)
     end
 
     private
+
     def _dispatch(item)
       dispatch(item) if item
+    end
+
+    def record_absent(id)
+      raise RecordAbsent, "#{self.class.name} contains no record with id: #{id}"
     end
   end
 end
