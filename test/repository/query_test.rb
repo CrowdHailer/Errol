@@ -71,4 +71,14 @@ class RepositoryQueyTest < RecordTest
     assert_equal SimpleDelegator, TestRepository[item.id].class
   end
 
+  def test_can_fetch_item_by_id
+    item = Item.create(:name => 'abc')
+    assert_equal item, TestRepository.fetch(item.id).__getobj__
+  end
+
+  def test_wraps_fetched_item
+    item = Item.create(:name => 'abc')
+    assert_equal SimpleDelegator, TestRepository.fetch(item.id).class
+  end
+
 end

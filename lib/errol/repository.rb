@@ -20,6 +20,10 @@ module Errol
       def [](id)
         new[id]
       end
+
+      def fetch(id)
+        new.fetch(id)
+      end
     end
 
     def first
@@ -31,6 +35,10 @@ module Errol
     end
 
     def [](id)
+      dispatch(dataset.first(:id => id))
+    end
+
+    def fetch(id)
       dispatch(dataset.first(:id => id))
     end
   end
