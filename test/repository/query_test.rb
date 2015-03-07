@@ -106,4 +106,14 @@ class RepositoryQueyTest < RecordTest
     TestRepository.fetch(2) { |id| mock.record id }
   end
 
+  def test_returns_all_items
+    item = Item.create(:name => 'abc')
+    assert_equal [item], TestRepository.all.map(&:__getobj__)
+  end
+
+  def test_wraps_all_items
+    item = Item.create(:name => 'abc')
+    assert_equal [SimpleDelegator], TestRepository.all.map(&:class)
+  end
+
 end
