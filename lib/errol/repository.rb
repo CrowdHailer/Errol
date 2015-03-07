@@ -2,11 +2,11 @@ module Errol
   class Repository
     class << self
       def empty?
-        true
+        count == 0
       end
 
       def count
-        0
+        new.dataset.count
       end
     end
   end
