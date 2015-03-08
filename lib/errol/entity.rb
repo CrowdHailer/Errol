@@ -37,15 +37,15 @@ module Errol
     # query uses !!
     # reader adds ? but does not use !!
 
-    # def self.entry_accessor(*entries)
-    #   entry_reader *entries
-    #   entry_writer *entries
-    # end
-    #
-    # def self.boolean_accessor(*entries)
-    #   entry_reader *entries
-    #   entry_writer *entries
-    # end
+    def self.entry_accessor(*entries)
+      entry_reader *entries
+      entry_writer *entries
+    end
+
+    def self.boolean_accessor(*entries)
+      boolean_query *entries
+      entry_writer *entries
+    end
 
     def initialize(record)
       @record = record

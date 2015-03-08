@@ -69,6 +69,32 @@ module Errol
       assert_equal true, instance.a?
     end
 
+    def test_entry_accessor_sets_reader_method
+      klass.entry_accessor :a
+      mock_record.expect :a, 4
+      assert_equal 4, instance.a
+    end
+
+    def test_entry_accessor_set_writer_method
+      klass.entry_accessor :a
+      mock_record.expect :a=, :random, [4]
+      instance.a = 4
+      mock_record.verify
+    end
+
+    def test_boolean_accessor_sets_query_method
+      klass.boolean_accessor :a
+      mock_record.expect :a, true
+      assert_equal true, instance.a?
+    end
+
+    def test_boolean_accessor_set_writer_method
+      klass.boolean_accessor :a
+      mock_record.expect :a=, :random, [4]
+      instance.a = 4
+      mock_record.verify
+    end
+
 
     # def test_bang
     #   mock_repo.expect :save, mock_repo, [instance]
