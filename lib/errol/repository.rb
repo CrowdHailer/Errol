@@ -65,7 +65,10 @@ module Errol
 
     def initialize(requirements={})
       @requirements = requirements
+      @inquiry = self.class.inquiry(requirements)
     end
+
+    attr_reader :inquiry
 
     def count
       dataset.count
@@ -106,10 +109,6 @@ module Errol
 
     def record_absent(id)
       raise RecordAbsent, "#{self.class.name} contains no record with id: #{id}"
-    end
-
-    def requirements
-      @requirements
     end
   end
 end

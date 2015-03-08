@@ -28,7 +28,7 @@ class TestRepository < Errol::Repository
 
   end
 
-  def inquiry
+  def self.inquiry(requirements)
     Inquiry.new(requirements)
   end
 
