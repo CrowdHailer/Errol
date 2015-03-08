@@ -155,4 +155,9 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal page, page.each{}
   end
 
+  def test_can_map_items_on_page
+    page = PaginatedRepository.new :page => 2
+    assert_equal [3], page.map(&:id)
+  end
+
 end

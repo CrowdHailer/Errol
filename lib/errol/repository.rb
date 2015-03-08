@@ -63,6 +63,8 @@ module Errol
       end
     end
 
+    include Enumerable
+
     def initialize(requirements={}, paginate=true)
       @requirements = requirements
       @inquiry = self.class.inquiry(requirements)
