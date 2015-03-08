@@ -18,6 +18,7 @@ module Errol
 
       def save(entity)
         receive(entity).save
+        self
       end
 
       def remove(entity)
@@ -26,6 +27,7 @@ module Errol
         rescue Sequel::NoExistingObject
           raise RecordAbsent
         end
+        self
       end
 
       def empty?(requirements={})

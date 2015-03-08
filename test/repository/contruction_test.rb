@@ -32,6 +32,11 @@ class RepositoryQueyTest < RecordTest
     refute_empty TestRepository
   end
 
+  def test_save_returns_repository
+    item = SimpleDelegator.new Item.new
+    assert_equal TestRepository, TestRepository.save(item)
+  end
+
   def test_can_remove_an_item
     item = SimpleDelegator.new Item.create
     TestRepository.remove(item)
@@ -43,6 +48,11 @@ class RepositoryQueyTest < RecordTest
     assert_raises Errol::Repository::RecordAbsent do
       TestRepository.remove(item)
     end
+  end
+
+  def test_remove_returns_repository
+    item = SimpleDelegator.new Item.create
+    assert_equal TestRepository, TestRepository.remove(item)
   end
 
   def test_can_create_item
