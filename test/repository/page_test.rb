@@ -106,6 +106,21 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal nil, page.previous_page
   end
 
+  def test_page_reports_not_empty
+    page = PaginatedRepository.new
+    refute_empty page
+  end
+
+  def test_page_reports_empty
+    page = PaginatedRepository.new :page => 3
+    assert_empty page
+  end
+
+  def test_counts_page_items
+    page = PaginatedRepository.new :page => 2
+    assert_equal 1, page.count
+  end
+
   def test_can_get_all_items_on_second_page
     page = PaginatedRepository.new :page => 2
     assert_equal [third], page.all.map{ |entity| entity.id }
@@ -116,8 +131,4 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal third, page.first.id
   end
 
-  def test_third_page_is_empty
-    page = PaginatedRepository.new :page => 3
-    assert_empty page
-  end
 end

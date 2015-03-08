@@ -108,7 +108,7 @@ module Errol
     end
 
     def count
-      dataset.count
+      paginated_dataset.count
     end
 
     def first
