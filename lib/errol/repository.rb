@@ -73,15 +73,33 @@ module Errol
       paginated_dataset.current_page
     end
 
-    # delegate( #:page_size,
-    #         #  :page_count,
-    #          :current_page,
-    #         #  :first_page?,
-    #         #  :last_page?,
-    #         #  :next_page,
-    #         #  :prev_page,
-    #         #  :page_range,
-    #          :to => :records_page)
+    def page_size
+      paginated_dataset.page_size
+    end
+
+    def first_page?
+      paginated_dataset.first_page?
+    end
+
+    def last_page?
+      paginated_dataset.last_page?
+    end
+
+    def page_count
+      paginated_dataset.page_count
+    end
+
+    def page_range
+      paginated_dataset.page_range
+    end
+
+    def next_page
+      paginated_dataset.next_page
+    end
+
+    def previous_page
+      paginated_dataset.prev_page
+    end
 
     attr_reader :inquiry
 

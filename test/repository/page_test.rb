@@ -1,5 +1,4 @@
 require_relative '../test_config'
-require_relative './query_test'
 
 class PaginatedInquiry < Errol::Inquiry
   default :page, 1
@@ -12,13 +11,7 @@ class PaginatedRepository < Errol::Repository
   end
 
   def dataset
-    # TODO this returns items
     dataset = raw_dataset
-    # This returns hashes
-    # items = DB['items']
-
-    # inquiry.show_offers? ? dataset.where(:discounted) : dataset
-
   end
 
   def self.inquiry(requirements)
@@ -51,15 +44,10 @@ class DemoRepositoryQueyTest < RecordTest
     @third ||= items.insert({})
   end
 
-  # def fourth
-  #   @fourth ||= items.insert({})
-  # end
-
   def setup
     first
     second
     third
-    # fourth
   end
 
   def teardown
@@ -68,18 +56,54 @@ class DemoRepositoryQueyTest < RecordTest
     @third = nil
   end
 
-  def test_can_get_first_page
+  def test_can_get_first_page_number
     page = PaginatedRepository.new
     assert_equal 1, page.current_page
   end
 
-  def test_can_get_second_page
-    page = PaginatedRepository.new :page => 2
-    assert_equal 2, page.current_page
+  def test_can_get_first_page_size
+    page = PaginatedRepository.new
+    assert_equal 2, page.page_size
   end
 
-  def test_can_read_page_size
+  def test_identifies_as_first_page
+    page = PaginatedRepository.new
+    assert page.first_page?
+  end
 
+  def test_identifies_as_not_first_page
+    page = PaginatedRepository.new :page => 2
+    refute page.first_page?
+  end
+
+  def test_identifies_as_last_page
+    page = PaginatedRepository.new :page => 2
+    assert page.last_page?
+  end
+
+  def test_identifies_as_not_first_page
+    page = PaginatedRepository.new
+    refute page.last_page?
+  end
+
+  def test_can_get_page_count_from_each_page
+    page = PaginatedRepository.new
+    assert_equal 2, page.page_count
+  end
+
+  def test_can_get_page_range
+    page = PaginatedRepository.new
+    assert_equal 1..2, page.page_range
+  end
+
+  def test_can_get_next_page
+    page = PaginatedRepository.new
+    assert_equal 2, page.next_page
+  end
+
+  def test_can_get_previous_page
+    page = PaginatedRepository.new
+    assert_equal nil, page.previous_page
   end
 
   def test_can_get_all_items_on_second_page
