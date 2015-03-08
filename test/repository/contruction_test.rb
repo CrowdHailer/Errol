@@ -24,4 +24,17 @@ class RepositoryQueyTest < RecordTest
     end
     mock.verify
   end
+
+  def test_can_save_an_item
+    # TODO incorperate, update.amend/renew/revise, remove/obliterate/withdraw
+    item = SimpleDelegator.new Item.new
+    TestRepository.save(item)
+    refute_empty TestRepository
+  end
+
+  def test_can_remove_an_item
+    item = SimpleDelegator.new Item.create
+    TestRepository.remove(item)
+    assert_empty TestRepository
+  end
 end

@@ -12,6 +12,14 @@ module Errol
         entity
       end
 
+      def save(entity)
+        receive(entity).save
+      end
+
+      def remove(entity)
+        receive(entity).destroy
+      end
+
       def empty?(requirements={})
         count(requirements) == 0
       end
