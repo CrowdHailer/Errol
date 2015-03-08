@@ -14,6 +14,7 @@ DB.create_table :items do
   TrueClass :discounted
   Float :price
 end
+DB.extension(:pagination)
 
 class RecordTest < MiniTest::Test
 

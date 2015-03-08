@@ -11,6 +11,10 @@ class Inquiry
   def show_offers?
     @requirements[:show_offers]
   end
+
+  def paginate?
+    false
+  end
 end
 
 class TestRepository < Errol::Repository

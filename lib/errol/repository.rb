@@ -68,6 +68,20 @@ module Errol
       @inquiry = self.class.inquiry(requirements)
     end
 
+    def current_page
+      paginated_dataset.current_page
+    end
+
+    # delegate( #:page_size,
+    #         #  :page_count,
+    #          :current_page,
+    #         #  :first_page?,
+    #         #  :last_page?,
+    #         #  :next_page,
+    #         #  :prev_page,
+    #         #  :page_range,
+    #          :to => :records_page)
+
     attr_reader :inquiry
 
     def count
@@ -94,7 +108,11 @@ module Errol
     end
 
     def all
-      dataset.map { |record| dispatch(record) }
+      if inquiry.paginate?
+        paginated_dataset.map { |record| dispatch(record) }
+      else
+        dataset.map { |record| dispatch(record) }
+      end
     end
 
     def raw_dataset
@@ -109,6 +127,10 @@ module Errol
 
     def record_absent(id)
       raise RecordAbsent, "#{self.class.name} contains no record with id: #{id}"
+    end
+
+    def paginated_dataset
+      dataset.paginate(inquiry.page.to_i, inquiry.page_size.to_i)
     end
   end
 end
