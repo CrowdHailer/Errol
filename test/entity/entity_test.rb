@@ -95,6 +95,11 @@ module Errol
       mock_record.verify
     end
 
+    def test_make_available_id
+      mock_record.expect :id, 4
+      assert_equal 4, instance.id
+    end
+
 
     # def test_bang
     #   mock_repo.expect :save, mock_repo, [instance]
