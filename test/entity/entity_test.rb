@@ -100,6 +100,18 @@ module Errol
       assert_equal 4, instance.id
     end
 
+    def test_sets_multiple_entries
+      assert_raises NoMethodError do
+        instance.set :a => 4
+      end
+    end
+
+    def test_set_returns_self
+      klass.entry_accessor :a
+      mock_record.expect :a=, true, [4]
+      assert_equal instance, instance.set(:a => 4)
+    end
+
 
     # def test_bang
     #   mock_repo.expect :save, mock_repo, [instance]

@@ -57,13 +57,13 @@ module Errol
 
     attr_reader :record
     entry_reader :id
-    #
-    # def set(**attributes)
-    #   attributes.each do |attribute, value|
-    #     self.public_send "#{attribute}=", value
-    #   end
-    #   self
-    # end
+
+    def set(**attributes)
+      attributes.each do |attribute, value|
+        self.public_send "#{attribute}=", value
+      end
+      self
+    end
     #
     # def ==(other)
     #   other.class == self.class && other.record == record
