@@ -3,8 +3,13 @@ module Errol
     RecordAbsent = Class.new(StandardError)
 
     class << self
-      def build
-        dispatch(record_class.new)
+      def build(entries={})
+        entity = dispatch(record_class.new)
+        entries.each do |attribute, value|
+          entity.public_send "#{attribute}=", value
+        end
+        yield entity if block_given?
+        entity
       end
 
       def empty?(requirements={})

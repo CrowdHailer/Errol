@@ -35,6 +35,10 @@ class TestRepository < Errol::Repository
   def self.dispatch(record)
     SimpleDelegator.new record
   end
+
+  def self.receive(entity)
+    entity.__getobj__
+  end
 end
 
 
