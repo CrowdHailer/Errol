@@ -44,4 +44,9 @@ class RepositoryQueyTest < RecordTest
       TestRepository.remove(item)
     end
   end
+
+  def test_can_create_item
+    TestRepository.create
+    refute_empty TestRepository
+  end
 end

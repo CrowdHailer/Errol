@@ -12,6 +12,10 @@ module Errol
         entity
       end
 
+      def create(*arguments, &block)
+        build(*arguments, &block).tap(&method(:save))
+      end
+
       def save(entity)
         receive(entity).save
       end
