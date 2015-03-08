@@ -121,14 +121,19 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal 1, page.count
   end
 
-  def test_can_get_all_items_on_second_page
-    page = PaginatedRepository.new :page => 2
-    assert_equal [third], page.all.map{ |entity| entity.id }
-  end
-
   def test_can_get_first_item_on_second_page
     page = PaginatedRepository.new :page => 2
     assert_equal third, page.first.id
+  end
+
+  def test_can_get_last_item_on_first_page
+    page = PaginatedRepository.new :page => 1
+    assert_equal second, page.last.id
+  end
+
+  def test_can_get_all_items_on_second_page
+    page = PaginatedRepository.new :page => 2
+    assert_equal [third], page.all.map{ |entity| entity.id }
   end
 
 end

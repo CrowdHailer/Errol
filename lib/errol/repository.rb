@@ -43,7 +43,7 @@ module Errol
       end
 
       def last(requirements={})
-        new(requirements).last
+        new(requirements, false).last
       end
 
       def [](id, requirements={})
@@ -116,7 +116,9 @@ module Errol
     end
 
     def last
-      dispatch(dataset.last)
+      # TODO say what!!
+      all.last
+      # dispatch(paginated_dataset.last)
     end
 
     def [](id)
