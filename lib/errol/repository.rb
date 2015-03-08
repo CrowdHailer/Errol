@@ -86,11 +86,7 @@ module Errol
     attr_reader :inquiry
 
     def empty?
-      if paginate?
-        paginated_dataset.empty?
-      else
-        dataset.empty?
-      end
+      paginated_dataset.empty?
     end
 
     def count
@@ -98,11 +94,7 @@ module Errol
     end
 
     def first
-      if paginate?
-        dispatch(paginated_dataset.first)
-      else
-        dispatch(dataset.first)
-      end
+      dispatch(paginated_dataset.first)
     end
 
     def last
@@ -121,11 +113,7 @@ module Errol
     end
 
     def all
-      if paginate?
-        paginated_dataset.map { |record| dispatch(record) }
-      else
-        dataset.map { |record| dispatch(record) }
-      end
+      paginated_dataset.map { |record| dispatch(record) }
     end
 
     def raw_dataset
@@ -147,7 +135,11 @@ module Errol
     end
 
     def paginated_dataset
-      dataset.paginate(inquiry.page.to_i, inquiry.page_size.to_i)
+      if paginate?
+        dataset.paginate(inquiry.page.to_i, inquiry.page_size.to_i)
+      else
+        dataset
+      end
     end
   end
 end
