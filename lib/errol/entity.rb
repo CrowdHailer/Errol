@@ -10,7 +10,6 @@ module Errol
     end
 
     def self.entry_reader(*entries)
-      # delegate *entries, :to => :record
       entries.each do |entry|
         define_method entry do
           record.public_send entry
@@ -26,13 +25,13 @@ module Errol
       end
     end
 
-    # def self.boolean_query(*entries)
-    #   entries.each do |entry|
-    #     define_method "#{entry}?" do
-    #       record.public_send :entry
-    #     end
-    #   end
-    # end
+    def self.boolean_query(*entries)
+      entries.each do |entry|
+        define_method "#{entry}?" do
+          record.public_send entry
+        end
+      end
+    end
 
     # boolean_writer is entry writer
     # query uses !!
@@ -66,10 +65,10 @@ module Errol
     #   self
     # end
 
-    def ==(other)
-      other.class == self.class && other.record == record
-    end
-    alias_method :eql?, :==
+    # def ==(other)
+    #   other.class == self.class && other.record == record
+    # end
+    # alias_method :eql?, :==
 
     #################################
     #

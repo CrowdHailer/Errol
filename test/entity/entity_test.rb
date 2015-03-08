@@ -50,29 +50,25 @@ module Errol
       assert_equal mock_repo.object_id, klass.repository.object_id
     end
 
-    def test_entry_reader
+    def test_entry_reader_sets_reader_method
       klass.entry_reader :a
       mock_record.expect :a, 4
-      mock_record.expect :nil?, false
       assert_equal 4, instance.a
     end
 
-    def test_entry_writer
+    def test_entry_writer_set_writer_method
       klass.entry_writer :a
       mock_record.expect :a=, :random, [4]
-      mock_record.expect :nil?, false
       instance.a = 4
       mock_record.verify
     end
 
-    def test_entry_writer
-      # Maybe return self
-      klass.entry_writer :a
-      mock_record.expect :a=, :random, [4]
-      mock_record.expect :nil?, false
-      returned = (instance.a = 4)
-      # ap returned
+    def test_boolean_query_sets_query_method
+      klass.boolean_query :a
+      mock_record.expect :a, true
+      assert_equal true, instance.a?
     end
+
 
     # def test_bang
     #   mock_repo.expect :save, mock_repo, [instance]
