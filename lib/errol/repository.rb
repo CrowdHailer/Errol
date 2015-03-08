@@ -89,7 +89,11 @@ module Errol
     end
 
     def first
-      dispatch(dataset.first)
+      if inquiry.paginate?
+        dispatch(paginated_dataset.first)
+      else
+        dispatch(dataset.first)
+      end
     end
 
     def last

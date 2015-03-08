@@ -83,4 +83,9 @@ class DemoRepositoryQueyTest < RecordTest
     page = DemoRepository.new :page => 2
     assert_equal [third, fourth], page.all.map{ |entity| entity.id }
   end
+
+  def test_can_get_first_item_on_second_page
+    page = DemoRepository.new :page => 2
+    assert_equal third, page.first.id
+  end
 end
