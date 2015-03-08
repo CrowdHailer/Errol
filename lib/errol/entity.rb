@@ -64,29 +64,29 @@ module Errol
     #   end
     #   self
     # end
-
+    #
     # def ==(other)
     #   other.class == self.class && other.record == record
     # end
     # alias_method :eql?, :==
-
-    #################################
     #
-    #    Sequel inspired helper methods
+    # #################################
+    # #
+    # #    Sequel inspired helper methods
+    # #
+    # ##################################
     #
-    ##################################
-
-    def save
-      repository.save self
-    end
-
-    def destory
-      repository.delete self
-    end
-
-    def reload
-      repository.reload self
-    end
+    # def save
+    #   repository.save self
+    # end
+    #
+    # def destory
+    #   repository.delete self
+    # end
+    #
+    # def reload
+    #   repository.reload self
+    # end
 
     ############ End ########################
     #
