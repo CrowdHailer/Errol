@@ -1,13 +1,12 @@
 module Errol
   class Entity
+    RepositoryUndefined = Class.new(StandardError)
     def self.repository=(repository)
-      define_method :repository do
-        repository
-      end
+      @repository = repository
+    end
 
-      define_singleton_method :repository do
-        repository
-      end
+    def self.repository
+      @repository || (raise RepositoryUndefined, "No repository set for #{self.name}")
     end
 
     def self.entry_reader(*entries)
@@ -51,6 +50,10 @@ module Errol
 
     def initialize(record)
       @record = record
+    end
+
+    def repository
+      self.class.repository
     end
 
     attr_reader :record
