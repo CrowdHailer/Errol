@@ -3,18 +3,8 @@ require_relative '../test_config'
 class Item < Sequel::Model(:items)
 end
 
-class Inquiry
-  def initialize(requirements={})
-    @requirements = requirements
-  end
-
-  def show_offers?
-    @requirements[:show_offers]
-  end
-
-  def paginate?
-    false
-  end
+class Inquiry < Errol::Inquiry
+  default :show_offers, false
 end
 
 class TestRepository < Errol::Repository

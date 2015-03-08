@@ -35,11 +35,11 @@ module Errol
       end
 
       def count(requirements={})
-        new(requirements).count
+        new({:paginate => false}.merge requirements).count
       end
 
       def first(requirements={})
-        new(requirements).first
+        new({:paginate => false}.merge requirements).first
       end
 
       def last(requirements={})
@@ -55,7 +55,7 @@ module Errol
       end
 
       def all(requirements={})
-        new(requirements).all
+        new({:paginate => false}.merge requirements).all
       end
 
       def raw_dataset
