@@ -17,7 +17,11 @@ module Errol
       end
 
       def remove(entity)
-        receive(entity).destroy
+        begin
+          receive(entity).destroy
+        rescue Sequel::NoExistingObject
+          raise RecordAbsent
+        end
       end
 
       def empty?(requirements={})

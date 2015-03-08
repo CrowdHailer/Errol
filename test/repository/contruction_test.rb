@@ -37,4 +37,11 @@ class RepositoryQueyTest < RecordTest
     TestRepository.remove(item)
     assert_empty TestRepository
   end
+
+  def test_cant_remove_missing_item
+    item = SimpleDelegator.new Item.new
+    assert_raises Errol::Repository::RecordAbsent do
+      TestRepository.remove(item)
+    end
+  end
 end
