@@ -14,9 +14,13 @@ class Inquiry
 end
 
 class TestRepository < Errol::Repository
+  def self.record_class
+    Item
+  end
+
   def dataset
     # TODO this returns items
-    dataset = Item.dataset
+    dataset = raw_dataset
     # This returns hashes
     # items = DB['items']
 
@@ -28,7 +32,7 @@ class TestRepository < Errol::Repository
     Inquiry.new(requirements)
   end
 
-  def dispatch(record)
+  def self.dispatch(record)
     SimpleDelegator.new record
   end
 end

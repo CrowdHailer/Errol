@@ -3,6 +3,10 @@ module Errol
     RecordAbsent = Class.new(StandardError)
 
     class << self
+      def build
+        dispatch(record_class.new)
+      end
+
       def empty?(requirements={})
         count(requirements) == 0
       end
@@ -30,6 +34,10 @@ module Errol
       def all(requirements={})
         new(requirements).all
       end
+
+      def raw_dataset
+        record_class.dataset
+      end
     end
 
     def initialize(requirements={})
@@ -41,32 +49,36 @@ module Errol
     end
 
     def first
-      _dispatch(dataset.first)
+      dispatch(dataset.first)
     end
 
     def last
-      _dispatch(dataset.last)
+      dispatch(dataset.last)
     end
 
     def [](id)
-      _dispatch(dataset.first(:id => id))
+      dispatch(dataset.first(:id => id))
     end
 
     def fetch(id)
-      item = _dispatch(dataset.first(:id => id))
+      item = dispatch(dataset.first(:id => id))
       return item if item
       return yield id if block_given?
       record_absent(id)
     end
 
     def all
-      dataset.map { |record| _dispatch(record) }
+      dataset.map { |record| dispatch(record) }
+    end
+
+    def raw_dataset
+      self.class.raw_dataset
     end
 
     private
 
-    def _dispatch(item)
-      dispatch(item) if item
+    def dispatch(item)
+      self.class.dispatch(item) if item
     end
 
     def record_absent(id)
