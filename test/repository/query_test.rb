@@ -1,8 +1,5 @@
 require_relative '../test_config'
 
-class Item < Sequel::Model(:items)
-end
-
 class Inquiry < Errol::Inquiry
   default :show_offers, false
 end

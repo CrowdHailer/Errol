@@ -88,4 +88,9 @@ class DemoRepositoryQueyTest < RecordTest
     page = DemoRepository.new :page => 2
     assert_equal third, page.first.id
   end
+
+  def test_third_page_is_empty
+    page = DemoRepository.new :page => 3
+    assert_empty page
+  end
 end

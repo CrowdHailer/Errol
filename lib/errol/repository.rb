@@ -31,7 +31,7 @@ module Errol
       end
 
       def empty?(requirements={})
-        count(requirements) == 0
+        new(requirements, false).empty?
       end
 
       def count(requirements={})
@@ -84,6 +84,14 @@ module Errol
     #          :to => :records_page)
 
     attr_reader :inquiry
+
+    def empty?
+      if paginate?
+        paginated_dataset.empty?
+      else
+        dataset.empty?
+      end
+    end
 
     def count
       dataset.count
