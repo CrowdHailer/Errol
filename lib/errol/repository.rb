@@ -132,7 +132,7 @@ module Errol
     end
 
     def fetch(id)
-      item = dispatch(dataset.first(:id => id))
+      item = self[id]
       return item if item
       return yield id if block_given?
       record_absent(id)
