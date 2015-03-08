@@ -17,7 +17,7 @@ module Errol
     end
 
     def self.defaults
-      @defaults ||= {:paginate => true}
+      @defaults ||= {}
     end
 
     def method_missing(method_name, *args, &block)

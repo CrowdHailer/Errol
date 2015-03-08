@@ -13,10 +13,7 @@ class TestRepository < Errol::Repository
   end
 
   def dataset
-    # TODO this returns items
     dataset = raw_dataset
-    # This returns hashes
-    # items = DB['items']
 
     inquiry.show_offers? ? dataset.where(:discounted) : dataset
 

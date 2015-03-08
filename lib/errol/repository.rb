@@ -35,11 +35,11 @@ module Errol
       end
 
       def count(requirements={})
-        new({:paginate => false}.merge requirements).count
+        new(requirements, false).count
       end
 
       def first(requirements={})
-        new({:paginate => false}.merge requirements).first
+        new(requirements, false).first
       end
 
       def last(requirements={})
@@ -55,7 +55,7 @@ module Errol
       end
 
       def all(requirements={})
-        new({:paginate => false}.merge requirements).all
+        new(requirements, false).all
       end
 
       def raw_dataset
@@ -63,9 +63,10 @@ module Errol
       end
     end
 
-    def initialize(requirements={})
+    def initialize(requirements={}, paginate=true)
       @requirements = requirements
       @inquiry = self.class.inquiry(requirements)
+      @paginate = paginate
     end
 
     def current_page
@@ -89,7 +90,7 @@ module Errol
     end
 
     def first
-      if inquiry.paginate?
+      if paginate?
         dispatch(paginated_dataset.first)
       else
         dispatch(dataset.first)
@@ -112,7 +113,7 @@ module Errol
     end
 
     def all
-      if inquiry.paginate?
+      if paginate?
         paginated_dataset.map { |record| dispatch(record) }
       else
         dataset.map { |record| dispatch(record) }
@@ -121,6 +122,10 @@ module Errol
 
     def raw_dataset
       self.class.raw_dataset
+    end
+
+    def paginate?
+      @paginate
     end
 
     private
