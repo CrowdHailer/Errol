@@ -47,11 +47,11 @@ module Errol
       end
 
       def [](id, requirements={})
-        new(requirements)[id]
+        new(requirements, false)[id]
       end
 
       def fetch(id, requirements={}, &block)
-        new(requirements).fetch(id, &block)
+        new(requirements, false).fetch(id, &block)
       end
 
       def all(requirements={})

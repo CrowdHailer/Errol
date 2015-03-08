@@ -131,6 +131,12 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal second, page.last.id
   end
 
+  # def test_nil_if_not_found_on_page
+  #   # TODO note pagination applied after filtering so finds record
+  #   page = PaginatedRepository.new :page => 1
+  #   assert_nil page[third]
+  # end
+
   def test_can_get_all_items_on_second_page
     page = PaginatedRepository.new :page => 2
     assert_equal [third], page.all.map{ |entity| entity.id }
