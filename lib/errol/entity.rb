@@ -64,15 +64,15 @@ module Errol
       end
       self
     end
-    #
-    # def ==(other)
-    #   other.class == self.class && other.record == record
-    # end
-    # alias_method :eql?, :==
-    #
+
+    def ==(other)
+      other.class == self.class && other.record == record
+    end
+    alias_method :eql?, :==
+
     # #################################
     # #
-    # #    Sequel inspired helper methods
+    # #    helper methods, might belong in module
     # #
     # ##################################
     #
