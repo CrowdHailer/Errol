@@ -58,6 +58,10 @@ module Errol
         new(requirements, false).all
       end
 
+      def each(requirements={}, &block)
+        new(requirements, false).each &block
+      end
+
       def raw_dataset
         record_class.dataset
       end

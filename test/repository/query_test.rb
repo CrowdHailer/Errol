@@ -170,4 +170,21 @@ class RepositoryQueyTest < RecordTest
     assert_equal [discounted], TestRepository.all(:show_offers => true).map(&:__getobj__)
   end
 
+  def test_can_get_each_item_in_repository
+    item = Item.create(:name => 'abc')
+    mock = MiniTest::Mock.new
+    mock.expect :record, true, [item]
+    TestRepository.each { |entity| mock.record entity.__getobj__ }
+    mock.verify
+  end
+
+  def test_can_get_each_item_in_filtered_repository
+    item = Item.create(:name => 'abc')
+    discounted = Item.create(:name => 'abc', :discounted => true)
+    mock = MiniTest::Mock.new
+    mock.expect :record, true, [discounted]
+    TestRepository.each(:show_offers => true) { |entity| mock.record entity.__getobj__ }
+    mock.verify
+  end
+
 end
