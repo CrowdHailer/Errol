@@ -136,6 +136,13 @@ module Errol
       paginated_dataset.map { |record| dispatch(record) }
     end
 
+    def each
+      paginated_dataset.each do |record|
+        yield dispatch(record)
+      end
+      self
+    end
+
     def raw_dataset
       self.class.raw_dataset
     end

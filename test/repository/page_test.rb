@@ -142,4 +142,17 @@ class DemoRepositoryQueyTest < RecordTest
     assert_equal [third], page.all.map{ |entity| entity.id }
   end
 
+  def test_can_get_each_item_on_page
+    mock = MiniTest::Mock.new
+    mock.expect :record, true, [third]
+    page = PaginatedRepository.new :page => 2
+    page.each { |entity| mock.record entity.id }
+    mock.verify
+  end
+
+  def test_each_method_returns_self
+    page = PaginatedRepository.new :page => 2
+    assert_equal page, page.each{}
+  end
+
 end
