@@ -49,7 +49,7 @@ module Errol
     end
 
     def initialize(record)
-      raise NilRecord, "Tried to initialise #{self.class.name} with nil record" if record.nil?
+      # raise NilRecord, "Tried to initialise #{self.class.name} with nil record" if record.nil?
       # TODO test
       @record = record
     end
