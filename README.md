@@ -141,7 +141,7 @@ end
 # With Errol::Entity
 class Customer < Errorl::Entity
   repository = Customers
-  entity_accessor :title, :body
+  entry_accessor :title, :body
 
   def intro
     body.split[' '][0, 3].join(' ') + '...'
