@@ -2,9 +2,6 @@ require_relative '../test_config'
 
 module Errol
   class EntityTest < MiniTest::Test
-    def mock_repo
-      @mock_repo ||= MiniTest::Mock.new
-    end
 
     def test_raises_informative_error_on_class_before_repository_set
       entity = Class.new Errol::Entity
