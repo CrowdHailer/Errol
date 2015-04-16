@@ -44,5 +44,33 @@ module Errol
       mock_repo.verify
     end
 
+    def test_save_returns_self
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :save, mock, [instance]
+      assert_equal instance.object_id, instance.save.object_id
+    end
+
+    def test_removes_self_with_repository
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :remove, mock, [instance]
+      instance.destroy
+      mock_repo.verify
+    end
+
+    def test_destroy_returns_self
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :remove, mock, [instance]
+      assert_equal instance.object_id, instance.destroy.object_id
+    end
+
   end
 end

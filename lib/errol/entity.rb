@@ -81,10 +81,12 @@ module Errol
     #
     def save
       repository.save self
+      self
     end
 
     def destroy
       repository.remove self
+      self
     end
     #
     # def reload
