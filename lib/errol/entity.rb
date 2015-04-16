@@ -70,12 +70,6 @@ module Errol
       save
     end
 
-    # #################################
-    # #
-    # #    helper methods, might belong in module
-    # #
-    # ##################################
-
     def repository
       self.class.repository
     end
@@ -94,8 +88,6 @@ module Errol
       repository.refresh self
       self
     end
-
-    ############ End ########################
 
     def ==(other)
       other.class == self.class && other.record == record
