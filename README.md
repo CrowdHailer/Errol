@@ -139,6 +139,9 @@ Posts.each { |post| puts post }
 
 Posts.each(:published => false, :order => :created_at) { |post| puts post }
 # Outputs each post in the database ordered by creation date
+
+#if you want a filtered dataset which is not paginated pass false as the last argument
+set = Posts.new({:order => :created_at}, false)
 ```
 
 
