@@ -169,6 +169,26 @@ end
 
 ### Entity
 
+**::entry_reader** `entity.entry_reader(*entries) => self`
+
+defines reader access to entries on the record which is short hand for calling `entity.record.entry`
+
+**::entry_writer** `entity.entry_writer(*entries) => self`
+
+defines writer access to entries on the record which is short hand for calling `entity.record.entry = value`
+
+**::boolean_query** `entity.boolean_query(*entries) => self`
+
+defines query(appends '?' on method name) to entries on the record which is short hand for calling `!!entity.record.entry`
+
+**::entry_accessor** `entity.entry_accessor(*entries) => self`
+
+short hand for entry_reader and entry_writer for entries
+
+**::boolean_accessor** `entity.boolean_accessor(*entries) => self`
+
+short hand for boolean_query and entry_writer for entries
+
 **#set** `entity.set(**attributes) => self`
 
 sends each item in the hash to a method matching the key with argument of the value
