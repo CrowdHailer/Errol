@@ -29,6 +29,7 @@ class Customer
     Customers.save record
   end
 end
+
 # With Errol::Entity
 class Customer < Errorl::Entity
   repository = Customers
@@ -58,7 +59,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Usage is best described by each of the components
+
+### Inquiry
+The inquiry object is simply a store of data that was sent with each inquiry plus an optional set of defaults. The repository assumes that a page and page_size is available when using the ability to paginate
+
+```rb
+class Posts
+  class Inquiry < Errol::Inquiry
+    default :order, :id
+    default :page, 1
+    default :page_size, 12
+    default :published, true
+  end
+end
+
+inquiry = Inquiry.new :page => 2
+inquiry.page
+# => 2
+inquiry.published?
+# => true
+inquiry.other
+# => raise DefaultValueUndefined
+```
+
+### Records
+These are simply sequel models. there is no wrapper and you define them as sequel models
+
+```rb
+class Post
+  class Record < Sequel::Model(:posts)
+  end
+end
+```
 
 ## Contributing
 
