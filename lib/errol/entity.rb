@@ -54,10 +54,6 @@ module Errol
       @record = record
     end
 
-    def repository
-      self.class.repository
-    end
-
     attr_reader :record
     entry_reader :id
 
@@ -68,17 +64,21 @@ module Errol
       self
     end
 
-    def ==(other)
-      other.class == self.class && other.record == record
+    def set!(*args)
+      set(*args)
+      save
     end
-    alias_method :eql?, :==
 
     # #################################
     # #
     # #    helper methods, might belong in module
     # #
     # ##################################
-    
+
+    def repository
+      self.class.repository
+    end
+
     def save
       repository.save self
       self
@@ -96,10 +96,10 @@ module Errol
 
     ############ End ########################
 
-    def set!(*args)
-      set(*args)
-      save
+    def ==(other)
+      other.class == self.class && other.record == record
     end
+    alias_method :eql?, :==
     # def method_missing(method_name, *args, &block)
     #   if method_name.to_s =~ /^(.+)!$/
     #     self.public_send($1, *args, &block)
