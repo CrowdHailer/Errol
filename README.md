@@ -93,6 +93,56 @@ class Post
 end
 ```
 
+### Repository
+The repository contains all the records, instances of a repository contain a subset dependant on the inquiry, by default the inquiry will be used to paginate.
+
+```rb
+class Posts < Errol::Repository
+
+  class << self
+    # The repository needs to know what records it is storing
+    def record_class
+      Post::Record
+    end
+
+    # The repository needs to know how to build a requirments hash that may be empty into a inquiry containing defaults
+    def inquiry(requirements)
+      Posts::Inquiry.new(requirements)
+    end
+  end
+
+  # This the odd part, the dataset method is called when returning data. This a custom method that allows arbitrarily complex manipulation of data using settings from the inquiry
+  def dataset
+    partial = raw_dataset
+    partial = partial.order(inquiry.order)
+    partial = partial.where(:published) if inquiry.published
+    partial
+  end
+end
+
+page = Posts.new
+# First page of published posts ordered by id
+
+page.first_page?
+# => true
+
+page.page_size
+# => 12
+
+page.each { |post| puts post }
+# Outputs each of the posts on the page
+
+# class methods also use an inquiry to filter data
+
+Posts.each { |post| puts post }
+# Outputs each published post in the dataset ordered by id
+
+Posts.each(:published => false, :order => :created_at) { |post| puts post }
+# Outputs each post in the database ordered by creation date
+```
+
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/errol/fork )
