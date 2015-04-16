@@ -38,7 +38,7 @@ module Errol
       instance = entity.new mock
       mock.expect :save, mock, [instance]
       instance.save
-      mock_repo.verify
+      mock.verify
     end
 
     def test_save_returns_self
@@ -57,7 +57,7 @@ module Errol
       instance = entity.new mock
       mock.expect :remove, mock, [instance]
       instance.destroy
-      mock_repo.verify
+      mock.verify
     end
 
     def test_destroy_returns_self
@@ -76,7 +76,7 @@ module Errol
       instance = entity.new mock
       mock.expect :refresh, mock, [instance]
       instance.refresh
-      mock_repo.verify
+      mock.verify
     end
 
     def test_refresh_returns_self
