@@ -29,14 +29,10 @@ module Errol
     def self.boolean_query(*entries)
       entries.each do |entry|
         define_method "#{entry}?" do
-          record.public_send entry
+          !!(record.public_send entry)
         end
       end
     end
-
-    # boolean_writer is entry writer
-    # query uses !!
-    # reader adds ? but does not use !!
 
     def self.entry_accessor(*entries)
       entry_reader *entries
