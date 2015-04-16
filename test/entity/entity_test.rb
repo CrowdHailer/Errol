@@ -28,39 +28,10 @@ module Errol
       @instance = nil
     end
 
-
-    def test_entry_accessor_sets_reader_method
-      klass.entry_accessor :a
-      mock_record.expect :a, 4
-      assert_equal 4, instance.a
-    end
-
-    def test_entry_accessor_set_writer_method
-      klass.entry_accessor :a
-      mock_record.expect :a=, :random, [4]
-      instance.a = 4
-      mock_record.verify
-    end
-
-    def test_boolean_accessor_sets_query_method
-      klass.boolean_accessor :a
-      mock_record.expect :a, true
-      assert_equal true, instance.a?
-    end
-
-    def test_boolean_accessor_set_writer_method
-      klass.boolean_accessor :a
-      mock_record.expect :a=, :random, [4]
-      instance.a = 4
-      mock_record.verify
-    end
-
     def test_make_available_id
       mock_record.expect :id, 4
       assert_equal 4, instance.id
     end
-
-
 
     def test_equal_if_wrapping_same_record
       klass = Class.new(Errol::Entity)
