@@ -196,3 +196,4 @@ Submits itself to the declared repository to be refreshed
 ## Upcoming
 1. separate repository save method to insert and replace
 2. method missing bang methods call normal method then save
+3. raise error if entity initialised with nil?
