@@ -169,6 +169,10 @@ end
 
 ### Entity
 
+**#set** `entity.set(**attributes) => self`
+
+sends each item in the hash to a method matching the key with argument of the value
+
 **#save** `entity.save => self`
 
 Submits itself to the declared repository for saving
@@ -191,3 +195,4 @@ Submits itself to the declared repository to be refreshed
 
 ## Upcoming
 1. separate repository save method to insert and replace
+2. method missing bang methods call normal method then save
