@@ -165,6 +165,21 @@ class Posts < Errol::Repository
 end
 ```
 
+## Documentation
+
+### Entity
+
+**#save** `entity.save => self`
+
+Submits itself to the declared repository for saving
+
+**#destroy** `entity.destroy => self`
+
+Submits itself to the declared repository for removal
+
+**#refresh** `entity.refresh => self`
+
+Submits itself to the declared repository to be refreshed
 
 ## Contributing
 

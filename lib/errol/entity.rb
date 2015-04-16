@@ -78,7 +78,7 @@ module Errol
     # #    helper methods, might belong in module
     # #
     # ##################################
-    #
+    
     def save
       repository.save self
       self
@@ -88,13 +88,13 @@ module Errol
       repository.remove self
       self
     end
-    #
-    # def reload
-    #   repository.reload self
-    # end
+
+    def refresh
+      repository.refresh self
+      self
+    end
 
     ############ End ########################
-    #
 
     def set!(*args)
       set(*args)

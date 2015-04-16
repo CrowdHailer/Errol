@@ -72,5 +72,24 @@ module Errol
       assert_equal instance.object_id, instance.destroy.object_id
     end
 
+    def test_refreshes_itself_with_repository
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :refresh, mock, [instance]
+      instance.refresh
+      mock_repo.verify
+    end
+
+    def test_refresh_returns_self
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :refresh, mock, [instance]
+      assert_equal instance.object_id, instance.refresh.object_id
+    end
+
   end
 end
