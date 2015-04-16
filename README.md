@@ -4,42 +4,7 @@
 
 They key components are the *Repository* that is responsible for storing and retrieving *Records* in response to various *Inquiries*. Records are not the same as the bloated god objects of active record but should remain simple data stores. The responsibility of a record is representing a database row with domain friendly types, this means serialising data. Where the behaviour that is no longer represented on your model now belongs is dependant on the system. It is often worth having an object that wraps the data record to define extra behaviour as well as methods to save. Errol ships with an entity that can be used as a starting point for these objects.  
 
-```rb
-# Without Errol::Entity
-class Customer
-  def initialize(record)
-    @record = record
-  end
 
-  attr_reader :record
-
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def first_name
-    record.first_name
-  end
-
-  def last_name
-    record.last_name
-  end
-
-  def save
-    Customers.save record
-  end
-end
-
-# With Errol::Entity
-class Customer < Errorl::Entity
-  repository = Customers
-  entity_accessor :first_name, :last_name
-
-  def first_name
-    "#{first_name} #{last_name}"
-  end
-end
-```
 
 ## Installation
 
@@ -144,6 +109,61 @@ Posts.each(:published => false, :order => :created_at) { |post| puts post }
 set = Posts.new({:order => :created_at}, false)
 ```
 
+### Entity
+Entities are an optional wrapper around the record objects. My personal criteria as to if can add something to my record is can this object still be represented by an open struct? This allows me to test my entities with Ostructs and see the data thats is pulled or pushed to them. Use a entity for anything else. Say we want a post intro which is the first 20 words of a post. *I often name my entities after the domain object and name space the record below them, this is because I never interact with the data record.*
+
+```rb
+# Without Errol::Entity
+class Post
+  def initialize(record)
+    @record = record
+  end
+
+  attr_reader :record
+
+  def intro
+    body.split[' '][0, 3].join(' ') + '...'
+  end
+
+  def body
+    record.body
+  end
+
+  def title
+    record.title
+  end
+
+  def save
+    Posts.save record
+  end
+end
+
+# With Errol::Entity
+class Customer < Errorl::Entity
+  repository = Customers
+  entity_accessor :title, :body
+
+  def intro
+    body.split[' '][0, 3].join(' ') + '...'
+  end
+end
+```
+
+If you are working with entities you might not want to have to keep wrapping records. The repository allows you to define a method for sending out and accepting entities.
+
+```rb
+class Posts < Errol::Repository
+  class << self
+    def dispatch(record)
+      Post.new(record)
+    end
+
+    def receive(entity)
+      entity.record
+    end
+  end
+end
+```
 
 
 ## Contributing
