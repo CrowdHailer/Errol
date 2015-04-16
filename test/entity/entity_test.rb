@@ -28,27 +28,6 @@ module Errol
       @instance = nil
     end
 
-    def test_raises_informative_error_on_class_before_repository_set
-      klass = Class.new(Errol::Entity)
-      assert_raises Errol::Entity::RepositoryUndefined do
-        klass.repository
-      end
-    end
-
-    def test_raises_informative_error_on_instance_before_repository_set
-      klass = Class.new(Errol::Entity)
-      assert_raises Errol::Entity::RepositoryUndefined do
-        klass.new(:a).repository
-      end
-    end
-
-    def test_sets_repository_on_instance
-      assert_equal mock_repo.object_id, klass.new(mock_record).repository.object_id
-    end
-
-    def test_sets_repository_on_class
-      assert_equal mock_repo.object_id, klass.repository.object_id
-    end
 
     def test_entry_reader_sets_reader_method
       klass.entry_reader :a
