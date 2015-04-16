@@ -29,11 +29,6 @@ module Errol
     end
 
 
-    def test_entry_reader_sets_reader_method
-      klass.entry_reader :a
-      mock_record.expect :a, 4
-      assert_equal 4, instance.a
-    end
 
     def test_entry_writer_set_writer_method
       klass.entry_writer :a
