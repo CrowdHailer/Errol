@@ -24,13 +24,24 @@ module Errol
     def test_sets_repository_on_instance
       entity = Class.new Errol::Entity
       entity.repository = :repository
-      assert_equal :repository, entity.new.repository
+      instance = entity.new :record
+      assert_equal :repository, instance.repository
     end
 
     def test_sets_repository_on_class
       entity = Class.new Errol::Entity
       entity.repository = :repository
       assert_equal :repository, entity.repository
+    end
+
+    def test_saves_self_to_repository
+      entity = Class.new Errol::Entity
+      mock = MiniTest::Mock.new
+      entity.repository = mock
+      instance = entity.new mock
+      mock.expect :save, mock, [instance]
+      instance.save
+      mock_repo.verify
     end
 
   end

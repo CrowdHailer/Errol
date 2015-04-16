@@ -107,12 +107,6 @@ module Errol
       refute_equal klass1.new(:a), klass2.new(:a)
     end
 
-    def test_saves_self_to_repository
-      mock_repo.expect :save, true, [instance]
-      instance.save
-      mock_repo.verify
-    end
-
     def test_destroys_self_with_repository
       mock_repo.expect :remove, true, [instance]
       instance.destroy
