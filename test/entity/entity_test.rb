@@ -79,17 +79,7 @@ module Errol
       assert_equal 4, instance.id
     end
 
-    def test_sets_multiple_entries
-      assert_raises NoMethodError do
-        instance.set :a => 4
-      end
-    end
 
-    def test_set_returns_self
-      klass.entry_accessor :a
-      mock_record.expect :a=, true, [4]
-      assert_equal instance.object_id, instance.set(:a => 4).object_id
-    end
 
     def test_equal_if_wrapping_same_record
       klass = Class.new(Errol::Entity)
@@ -107,19 +97,6 @@ module Errol
       refute_equal klass1.new(:a), klass2.new(:a)
     end
 
-    def test_destroys_self_with_repository
-      mock_repo.expect :remove, true, [instance]
-      instance.destroy
-      mock_repo.verify
-    end
-
-    def test_save_after_set
-      mock_repo.expect :save, mock_repo, [instance]
-      instance.stub :set, instance do
-        instance.set!
-      end
-      mock_repo.verify
-    end
 
     def test_undefined_bang
       assert_raises NoMethodError do
