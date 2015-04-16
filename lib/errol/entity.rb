@@ -55,6 +55,7 @@ module Errol
     end
 
     attr_reader :record
+    protected :record
     entry_reader :id
 
     def set(**attributes)
